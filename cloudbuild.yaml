@@ -5,15 +5,12 @@ steps:
 # push container image
 - name: "gcr.io/cloud-builders/docker"
   args: ["push", "gcr.io/$PROJECT_ID/calculator"]
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'k8s/']
+- name: 'gcr.io/$PROJECT_ID/helm'
+  args: ['upgrade', '--install', 'calculator', '--namespace', 'default', 'stable/calculator']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'  
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['set', 'image', 'deployment/calculator', 'my-container=gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA']
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'  
+  - 'TILLERLESS=true'
+  - 'TILLER_NAMESPACE=test'   
 images:
 - 'gcr.io/$PROJECT_ID/calculator'
