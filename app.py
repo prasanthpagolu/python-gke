@@ -22,7 +22,7 @@ def add():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
     result = calculator.add(param1, param2)
-    return str(result) + '\n' + servedByString
+    return str(result) + '\n' + servedByString()
 
 
 @app.route('/subtract')
@@ -30,7 +30,7 @@ def sub():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
     result = calculator.subtract(param1, param2)
-    return str(result) + '\n' + servedByString
+    return str(result) + '\n' + servedByString()
 
 
 @app.route('/')
