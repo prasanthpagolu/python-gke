@@ -46,7 +46,7 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
             - name: PORT
-              value: {{ .Values.service.port }}
+              value: "{{ .Values.service.port }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
