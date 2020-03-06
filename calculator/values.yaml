@@ -5,8 +5,8 @@
 replicaCount: 2
 
 image:
-  repository: gcr.io/$PROJECT_ID/calculator
-  tag: $BRANCH_NAME-$COMMIT_SHA
+  repository: REPLACE.ME
+  tag: REPLACE.ME
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
