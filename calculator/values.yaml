@@ -15,7 +15,7 @@ fullnameOverride: ""
 
 service:
   type: LoadBalancer
-  port: 8080
+  port: 5000
 
 ingress:
   enabled: false
