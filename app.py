@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, request
-from app import calculator
+from calculator import add, subtract
 
 app = Flask(__name__)
 
@@ -18,18 +18,18 @@ def servedByString():
 
 
 @app.route('/add')
-def add():
+def add_route():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
-    result = calculator.add(param1, param2)
+    result = add(param1, param2)
     return result + '\n' + servedByString
 
 
 @app.route('/subtract')
-def sub():
+def sub_route():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
-    result = calculator.subtract(param1, param2)
+    result = subtract(param1, param2)
     return result + '\n' + servedByString
 
 
