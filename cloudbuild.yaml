@@ -6,7 +6,7 @@ steps:
 - name: "gcr.io/cloud-builders/docker"
   args: ["push", "gcr.io/$PROJECT_ID/calculator"]
 - name: 'gcr.io/$PROJECT_ID/helm'
-  args: ['upgrade', '--install', 'calculator', '--namespace', 'default', '.']
+  args: ['upgrade', '--install', 'calculator', '--namespace', 'default', './calculator']
   env:
   - 'CLOUDSDK_COMPUTE_REGION=europe-west1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'  
