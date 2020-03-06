@@ -12,25 +12,26 @@ def health():
 
 
 def servedByString():
-    podName = os.environ.get('MY_POD_NAME', 'pod name')
-    podIp = os.environ.get('MY_POD_IP', 'pod ip')
-    return 'Served By Pod name {}, Pod Ip {}'.format(podName, podIp)
+    podName = os.environ.get('POD_NAME', 'pod name')
+    podIp = os.environ.get('POD_IP', 'pod ip')
+    hostIp = os.environ.get('HOST_IP', 'host ip')
+    return '\nServed By Pod name {}, Pod Ip {}, Host Ip {}'.format(podName, podIp, hostIp)
 
 
 @app.route('/add')
 def add():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
-    result = calculator.add(param1, param2)
-    return str(result) + '\n' + servedByString()
+    result = calculator.calculate("ADD", param1, param2)
+    return str(result) + servedByString()
 
 
 @app.route('/subtract')
 def sub():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
-    result = calculator.subtract(param1, param2)
-    return str(result) + '\n' + servedByString()
+    result = calculator.calculate("SUBTRACT", param1, param2)
+    return str(result) + servedByString()
 
 
 @app.route('/')

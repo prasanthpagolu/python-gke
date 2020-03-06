@@ -3,9 +3,8 @@ Calculator library containing basic math operations.
 """
 
 
-def add(first_term, second_term):
-    return first_term + second_term
-
-
-def subtract(first_term, second_term):
-    return first_term - second_term
+def calculate(op, number1, number2):
+    if op == "ADD":
+        return int(number1) + int(number2)
+    if op == "SUBTRACT":
+        return int(number1) - int(number2)
