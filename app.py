@@ -12,10 +12,8 @@ def health():
 
 
 def servedByString():
-    podName = os.environ.get('POD_NAME', 'pod name')
-    podIp = os.environ.get('POD_IP', 'pod ip')
-    hostIp = os.environ.get('HOST_IP', 'host ip')
-    return '\nServed By Pod name {}, Pod Ip {}, Host Ip {}'.format(podName, podIp, hostIp)
+    service_host = os.environ.get('CALCULATOR_SERVICE_HOST', 'service host')
+    return '<br/>Served By service host {}'.format(service_host)
 
 
 @app.route('/add')

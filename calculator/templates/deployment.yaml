@@ -37,18 +37,6 @@ spec:
               path: /health
               port: http
           env:
-            - name: POD_NAME
-              valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-            - name: POD_IP
-              valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-            - name: HOST_IP
-              valueFrom:
-              fieldRef:
-                fieldPath: status.hostIP
             - name: PORT
               value: "{{ .Values.service.port }}"
           resources:

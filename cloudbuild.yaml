@@ -1,16 +1,43 @@
 steps:
+  # run unit tests
+  - name: "python:3.7-slim"
+    entrypoint: /bin/sh
+    args:
+      - -c
+      - "pip install -r requirements.txt && flake8 --statistics && python -m pytest -v"
   # build the container image
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA', '-t', 'gcr.io/$PROJECT_ID/calculator:latest', '.' ]
-# push container image 
-- name: "gcr.io/cloud-builders/docker"
-  args: ["push", "gcr.io/$PROJECT_ID/calculator"]
-- name: 'gcr.io/$PROJECT_ID/helm'
-  args: ['upgrade', '--install', 'calculator', '--namespace', 'default', './calculator', '--set', 'image.repository=gcr.io/$PROJECT_ID/calculator', '--set', 'image.tag=$BRANCH_NAME-$COMMIT_SHA']
-  env:
-  - 'CLOUDSDK_COMPUTE_REGION=europe-west1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'  
-  - 'TILLERLESS=true'
-  - 'TILLER_NAMESPACE=test'   
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA",
+        "-t",
+        "gcr.io/$PROJECT_ID/calculator:latest",
+        ".",
+      ]
+  # push container image
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/calculator"]
+  # deploy helm charts
+  - name: "gcr.io/$PROJECT_ID/helm"
+    args:
+      [
+        "upgrade",
+        "--install",
+        "calculator",
+        "--namespace",
+        "default",
+        "./calculator",
+        "--set",
+        "image.repository=gcr.io/$PROJECT_ID/calculator",
+        "--set",
+        "image.tag=$BRANCH_NAME-$COMMIT_SHA",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=europe-west1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=cluster-1"
+      - "TILLERLESS=true"
+      - "TILLER_NAMESPACE=test"
 images:
-- 'gcr.io/$PROJECT_ID/calculator'
+  - "gcr.io/$PROJECT_ID/calculator"
