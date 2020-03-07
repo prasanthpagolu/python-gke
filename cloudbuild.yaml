@@ -10,9 +10,10 @@ steps:
   - id: code-quality
     name: 'gcr.io/$PROJECT_ID/sonar-scanner:3.2.0.1227'
     args:
-    - '-Dsonar.host.url=http://35.201.70.180'
-    - '-Dsonar.login=4b1713add8d8b000cc23123e4ee8697b4bc75b4b'
-    - '-Dsonar.projectKey=python-example'
+    - '-Dsonar.host.url=https://sonarcloud.io'
+    - '-Dsonar.login=f076d654107f2ed311403208cd46d69e7130630a'
+    - '-Dsonar.organization=prasanthpagolu'
+    - '-Dsonar.projectKey=prasanthpagolu_python-gke'
     - '-Dsonar.sources=.'      
   # build the container image
   - id: docker-build
