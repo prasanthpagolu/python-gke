@@ -11,7 +11,7 @@ def health():
     return 'Ok'
 
 
-def servedByString():
+def get_service_host():
     service_host = os.environ.get('CALCULATOR_SERVICE_HOST', 'service host')
     return '<br/>Served By service host {}'.format(service_host)
 
@@ -21,7 +21,7 @@ def add():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
     result = calculator.calculate("ADD", param1, param2)
-    return str(result) + servedByString()
+    return str(result) + get_service_host()
 
 
 @app.route('/subtract')
@@ -29,7 +29,7 @@ def sub():
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
     result = calculator.calculate("SUBTRACT", param1, param2)
-    return str(result) + servedByString()
+    return str(result) + get_service_host()
 
 
 @app.route('/')
