@@ -5,7 +5,7 @@ steps:
     entrypoint: /bin/sh
     args:
       - -c
-      - "cd /app && pip install -r requirements.txt && flake8 --statistics && python -m pytest -v"
+      - "pip install -r requirements.txt && flake8 --statistics && python -m pytest -v"
  # sonarqube code quality
   - id: code-quality
     name: 'gcr.io/$PROJECT_ID/sonar-scanner:3.2.0.1227'
