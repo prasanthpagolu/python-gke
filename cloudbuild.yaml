@@ -10,7 +10,7 @@ steps:
   - id: code-quality
     name: 'gcr.io/$PROJECT_ID/sonar-scanner:latest'
     args:
-    - '-Dsonar.host.url=http://http://35.201.70.180'
+    - '-Dsonar.host.url=http://35.201.70.180'
     - '-Dsonar.login=4b1713add8d8b000cc23123e4ee8697b4bc75b4b'
     - '-Dsonar.projectKey=python-example'
     - '-Dsonar.sources=.'      
