@@ -28,7 +28,7 @@ steps:
         ".",
       ]
   - id: clair-scan
-    name: 'gcr.io/$PROJECT_ID/klar:latest'
+    name: 'gcr.io/$PROJECT_ID/klar:f5cfd96b9422744aefe082917218bee9bf46e7845327099f339d7ca5d740be45'
     args:
     - '-DCLAIR_ADDR=localhost'
     - '-DCLAIR_OUTPUT=High'
