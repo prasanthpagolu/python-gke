@@ -34,13 +34,13 @@ steps:
  # clair container scanning
   - id: clair-scan
     name: 'gcr.io/$PROJECT_ID/klar@sha256:f5cfd96b9422744aefe082917218bee9bf46e7845327099f339d7ca5d740be45'
-    args: ["gcr.io/central-web-265015/calculator:latest"]
+    args: ["gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA"]
     env: 
       - "CLAIR_ADDR=35.190.196.11:6060"
       - "CLAIR_OUTPUT=High"
       - "CLAIR_THRESHOLD=10"
       - "DOCKER_USER=oauth2accesstoken"
-      - "DOCKER_PASSWORD='$(docker run --rm google/cloud-sdk:alpine gcloud auth application-default print-access-token)'"
+      - "DOCKER_PASSWORD='$(gcloud auth application-default print-access-token)'"
   # deploy helm charts
   - id: helm-deploy
     name: "gcr.io/$PROJECT_ID/helm"
