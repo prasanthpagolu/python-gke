@@ -1,47 +1,45 @@
 steps:
   # run unit tests
-#   - id: unit-tests
-#     name: "python:3.7-slim"
-#     entrypoint: /bin/sh
-#     args:
-#       - -c
-#       - "pip install -r requirements.txt && flake8 --statistics && python -m pytest -v"
-#  # sonarqube code quality
-#   - id: code-quality
-#     name: 'gcr.io/$PROJECT_ID/sonar-scanner:3.2.0.1227'
-#     args:
-#     - '-Dsonar.host.url=https://sonarcloud.io'
-#     - '-Dsonar.login=f076d654107f2ed311403208cd46d69e7130630a'
-#     - '-Dsonar.organization=prasanthpagolu'
-#     - '-Dsonar.projectKey=prasanthpagolu_python-gke'
-#     - '-Dsonar.sources=.'      
-#   # build the container image
-#   - id: docker-build
-#     name: "gcr.io/cloud-builders/docker"
-#     args:
-#       [
-#         "build",
-#         "-t",
-#         "gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA",
-#         "-t",
-#         "gcr.io/$PROJECT_ID/calculator:latest",
-#         ".",
-#       ]
-#    # push container image
-#   - id: docker-push
-#     name: "gcr.io/cloud-builders/docker"
-#     args: ["push", "gcr.io/$PROJECT_ID/calculator"]
+  - id: unit-tests
+    name: "python:3.7-slim"
+    entrypoint: /bin/sh
+    args:
+      - -c
+      - "pip install -r requirements.txt && flake8 --statistics && python -m pytest -v"
+ # sonarqube code quality
+  - id: code-quality
+    name: 'gcr.io/$PROJECT_ID/sonar-scanner:3.2.0.1227'
+    args:
+    - '-Dsonar.host.url=https://sonarcloud.io'
+    - '-Dsonar.login=f076d654107f2ed311403208cd46d69e7130630a'
+    - '-Dsonar.organization=prasanthpagolu'
+    - '-Dsonar.projectKey=prasanthpagolu_python-gke'
+    - '-Dsonar.sources=.'      
+  # build the container image
+  - id: docker-build
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA",
+        "-t",
+        "gcr.io/$PROJECT_ID/calculator:latest",
+        ".",
+      ]
+   # push container image
+  - id: docker-push
+    name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/calculator"]
  # clair container scanning
   - id: clair-scan
-    name: 'gcr.io/$PROJECT_ID/klar@sha256:f5cfd96b9422744aefe082917218bee9bf46e7845327099f339d7ca5d740be45'
-    # args: ["gcr.io/$PROJECT_ID/calculator@sha256:$COMMIT_SHA"]
-    args: ["gcr.io/google-containers/busybox"]
+    name: 'gcr.io/$PROJECT_ID/klar'
+    args: ["gcr.io/$PROJECT_ID/calculator:latest"]
     env: 
       - "CLAIR_ADDR=35.190.196.11:6060"
       - "CLAIR_OUTPUT=High"
       - "CLAIR_THRESHOLD=10"
       - "DOCKER_USER=oauth2accesstoken"
-      - "DOCKER_PASSWORD='$(gcloud auth application-default print-access-token)'"
   # deploy helm charts
   - id: helm-deploy
     name: "gcr.io/$PROJECT_ID/helm"
