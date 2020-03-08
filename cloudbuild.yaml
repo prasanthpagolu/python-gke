@@ -36,6 +36,7 @@ steps:
         "--env CLAIR_THRESHOLD=10",
         "--env DOCKER_USER=oauth2accesstoken",
         "--env DOCKER_PASSWORD='$(docker run --rm google/cloud-sdk:alpine gcloud auth application-default print-access-token)'",
+        "klar",
         "gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA"
       ]
 
