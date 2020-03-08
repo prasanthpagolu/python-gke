@@ -27,6 +27,16 @@ steps:
         "gcr.io/$PROJECT_ID/calculator:latest",
         ".",
       ]
+  - id: clair-scan
+    name: 'gcr.io/$PROJECT_ID/klar:latest'
+    args:
+    - '-DCLAIR_ADDR=localhost'
+    - '-DCLAIR_OUTPUT=High'
+    - '-DCLAIR_THRESHOLD=10'
+    - '-DDOCKER_USER=oauth2accesstoken'
+    - '-DDOCKER_PASSWORD="$(docker run --rm google/cloud-sdk:alpine gcloud auth application-default print-access-token)"'
+    - 'gcr.io/$PROJECT_ID/calculator:$BRANCH_NAME-$COMMIT_SHA'
+
   # push container image
   - id: docker-push
     name: "gcr.io/cloud-builders/docker"
